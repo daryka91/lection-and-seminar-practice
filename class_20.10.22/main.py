@@ -1,58 +1,35 @@
 class BasePokemon:
-    def __init__(self, name, category):
+    def __init__(self, name: str, category: str):
         self.name = name
         self.category = category
 
-    def to_str(self):
+    def __str__(self):
         return f'{self.name}/{self.category}'
 
 
-# class Pokemon(BasePokemon):
-#     def __init__(self, name, category, weaknesses: list):
-#         super().__init__(name, category)
-#         self.weaknesses = weaknesses
-
-
-ICON = {
-    'grass' : '🌿',
-    # fire => 🔥
-    # water => 🌊
-    'electric': '⚡'
-}
 class EmojiMixin:
     ICON = {
         'grass': '🌿',
-        # fire => 🔥
-        # water => 🌊
-        'electric': '⚡'
+        'electric': '⚡',
+        'water': '🌊',
+        'fire': '🔥'
     }
 
     def __str__(self):
-        text: str = super().__str__()
         for cat, emoji in self.ICON.items():
-            replaced = text.replace(cat, emoji)
-            if replaced != text:
-                return replaced
-        return text
+            replased = self.category.replace(cat, emoji)
+            if replased != self.category:
+                return f'{self.name}/{replased}'
+        return f'{self.name}/{self.category}'
+
 
 class Pokemon(EmojiMixin, BasePokemon):
     pass
 
-# Pokemon(name='Bulbasaur', poketype='grass')
-# print(bulbasaur)
-# Out: 'Bulbasaur/grass'
-# charmander = Pokemon(name='Charmander', category='Lizard')
-# charmander.to_str()
+
 if __name__ == '__main__':
-    # charmander = Pokemon(
-    #     name='Charmander',
-    #     category='Lizard',
-    #     weaknesses=['water', 'ground', 'rock']
-    # )
-    # print(charmander.__dict__)
-    # print(charmander.to_str())
-        bulbasaur = Pokemon(name='Bulbasaur', poketype='grass')
-        print(bulbasaur)
+    bulbasaur = Pokemon(name='Pikachu', category='electric')
+    print(bulbasaur)
 
 
 
@@ -68,10 +45,3 @@ if __name__ == '__main__':
 # __repr__-представление для разработчиков, __str__-для пользователей, обычно так
 # есть магические методы для сравнения
 
-pikachu = Pokemon(name='Pikachu', category='electric')
-print(pikachu)
-Out: 'Pikachu/⚡'
-grass => 🌿
-fire => 🔥
-water => 🌊
-electric => ⚡
